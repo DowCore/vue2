@@ -24,4 +24,4 @@ Vue.use(Element, {
   i18n: (key, value) => i18n.t(key, value)
 })
 
-new Vue({ i18n }).$mount('#app')
+export default i18n
