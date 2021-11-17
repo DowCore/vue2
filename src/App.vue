@@ -2,7 +2,11 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/about">About {{$t('hello')}}</router-link>
+      <el-select>
+        <option name="1" value="1"></option>
+      </el-select>
+      <i class="el-icon-info"></i>
     </div>
     <router-view />
   </div>
