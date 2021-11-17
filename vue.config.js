@@ -1,13 +1,11 @@
 module.exports = {
-    configureWebpack: {
-     
+  configureWebpack: {},
+  css: {
+    loaderOptions: {
+      sass: {
+        //data: `@import "@/styles/_variable.scss";`
+      },
     },
-    css: {
-      loaderOptions: {
-        sass: {
-          //data: `@import "@/styles/_variable.scss";`
-        }
-      }
-    },
-    lintOnSave:true
-  }
+  },
+  lintOnSave: true,
+};
