@@ -1,3 +1,9 @@
+'use strict'
+const path = require('path')
+function resolve(dir) {
+  return path.join(__dirname, dir)
+}
+
 module.exports = {
   configureWebpack: {
     // provide the app's title in webpack's name field, so that
@@ -13,8 +19,8 @@ module.exports = {
     loaderOptions: {
       sass: {
         //data: `@import "@/styles/_variable.scss";`
-      },
-    },
+      }
+    }
   },
-  lintOnSave: true,
-};
+  lintOnSave: true
+}
