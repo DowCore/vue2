@@ -2,6 +2,7 @@
   <div id="app">
     <router-view />
     <el-button @click="show"></el-button>
+    <div class="text-white bg-green-500 hover:bg-green-700">2323</div>
     {{ location.x + ',' + location.y }}
   </div>
 </template>
@@ -13,7 +14,7 @@
     name: 'App',
     data() {
       return {
-        location: ''
+        location: '',
       }
     },
     mounted() {
@@ -24,7 +25,7 @@
       show() {
         const { isLoading } = useNProgress()
         isLoading.value = true
-      }
-    }
+      },
+    },
   }
 </script>

@@ -51,16 +51,16 @@
       // route object
       item: {
         type: Object,
-        required: true
+        required: true,
       },
       isNest: {
         type: Boolean,
-        default: false
+        default: false,
       },
       basePath: {
         type: String,
-        default: ''
-      }
+        default: '',
+      },
     },
     data() {
       // To fix https://github.com/PanJiaChen/vue-admin-template/issues/237
@@ -101,7 +101,7 @@
           return this.basePath
         }
         return path.resolve(this.basePath, routePath)
-      }
-    }
+      },
+    },
   }
 </script>

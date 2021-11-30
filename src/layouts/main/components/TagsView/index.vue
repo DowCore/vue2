@@ -41,7 +41,7 @@
         top: 0,
         left: 0,
         selectedTag: {},
-        affixTags: []
+        affixTags: [],
       }
     },
     computed: {
@@ -50,7 +50,7 @@
       },
       routes() {
         return this.$store.state.permission.routes
-      }
+      },
     },
     watch: {
       $route() {
@@ -63,7 +63,7 @@
         } else {
           document.body.removeEventListener('click', this.closeMenu)
         }
-      }
+      },
     },
     mounted() {
       this.initTags()
@@ -85,7 +85,7 @@
               fullPath: tagPath,
               path: tagPath,
               name: route.name,
-              meta: { ...route.meta }
+              meta: { ...route.meta },
             })
           }
           if (route.children) {
@@ -133,7 +133,7 @@
           const { fullPath } = view
           this.$nextTick(() => {
             this.$router.replace({
-              path: '/redirect' + fullPath
+              path: '/redirect' + fullPath,
             })
           })
         })
@@ -196,8 +196,8 @@
       },
       handleScroll() {
         this.closeMenu()
-      }
-    }
+      },
+    },
   }
 </script>
 

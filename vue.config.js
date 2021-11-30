@@ -11,16 +11,16 @@ module.exports = {
     // name: name,
     resolve: {
       alias: {
-        '@': resolve('src')
-      }
-    }
+        '@': resolve('src'),
+      },
+    },
   },
   css: {
     loaderOptions: {
       sass: {
         //data: `@import "@/styles/_variable.scss";`
-      }
-    }
+      },
+    },
   },
-  lintOnSave: true
+  lintOnSave: true,
 }

@@ -17,8 +17,8 @@
       },
       key() {
         return this.$route.path
-      }
-    }
+      },
+    },
   }
 </script>
 

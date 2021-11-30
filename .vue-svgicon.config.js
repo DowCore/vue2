@@ -7,9 +7,9 @@ module.exports = {
   svgFilePath: svgFilePaths,
   svgoConfig: {},
   pathAlias: {
-    '@svg': svgFilePaths[0]
+    '@svg': svgFilePaths[0],
   },
   transformAssetUrls: {
-    [tagName]: ['data']
-  }
+    [tagName]: ['data'],
+  },
 }

@@ -16,13 +16,13 @@
     name: 'ScrollPane',
     data() {
       return {
-        left: 0
+        left: 0,
       }
     },
     computed: {
       scrollWrapper() {
         return this.$refs.scrollContainer.$refs.wrap
-      }
+      },
     },
     mounted() {
       this.scrollWrapper.addEventListener('scroll', this.emitScroll, true)
@@ -77,8 +77,8 @@
             $scrollWrapper.scrollLeft = beforePrevTagOffsetLeft
           }
         }
-      }
-    }
+      },
+    },
   }
 </script>
 

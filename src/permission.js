@@ -4,9 +4,9 @@ import { Message } from 'element-ui'
 import { useNProgress } from '@vueuse/integrations/useNProgress'
 import { getToken } from '@/utils/auth' // get token from cookie
 import getPageTitle from '@/utils/get-page-title'
-const whiteList = ['/login', '/auth-redirect'] // no redirect whitelist
+const whiteList = ['/login', '/auth-redirect','/home'] // no redirect whitelist
 
-const  progress = useNProgress()
+const progress = useNProgress()
 router.beforeEach(async (to, from, next) => {
   // start progress bar
   progress.value = true

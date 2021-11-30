@@ -11,8 +11,8 @@
     props: {
       to: {
         type: String,
-        required: true
-      }
+        required: true,
+      },
     },
     computed: {
       isExternal() {
@@ -23,7 +23,7 @@
           return 'a'
         }
         return 'router-link'
-      }
+      },
     },
     methods: {
       linkProps(to) {
@@ -31,13 +31,13 @@
           return {
             href: to,
             target: '_blank',
-            rel: 'noopener'
+            rel: 'noopener',
           }
         }
         return {
-          to: to
+          to: to,
         }
-      }
-    }
+      },
+    },
   }
 </script>
