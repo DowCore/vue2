@@ -23,6 +23,7 @@ import '@yzfe/svgicon/lib/svgicon.css'
 import 'windi.css'
 
 import './permission.js'
+console.log(faUser)
 library.add(faUser)
 library.add(faUserSecret)
 library.add(faUserCircle)

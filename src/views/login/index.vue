@@ -7,9 +7,9 @@
       </div>
 
       <el-form-item prop="username">
-        <span class="svg-container">
-          <svg-icon icon-class="user" />
-          <font-awesome-icon icon="user" style="color:#fff"></font-awesome-icon>
+        <span class="svg-container" style="font-size:16px;">
+          <svg-icon icon-class="user"  />
+          <font-awesome-icon icon="user" width="16px" height="16px" ></font-awesome-icon>
         </span>
         <el-input
           ref="username"
@@ -25,7 +25,7 @@
       <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
         <el-form-item prop="password">
           <span class="svg-container">
-            <svg-icon icon-class="password" />
+            <svg-icon data="@svg/password.svg" />
           </span>
           <el-input
             :key="passwordType"
