@@ -1,76 +1,46 @@
 <template>
-  <div class="login-container">
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
-
-      <div class="title-container">
-        <h3 class="title">Login Form</h3>
-      </div>
-
-      <el-form-item prop="username">
-        <span class="svg-container" style="font-size:16px;">
-          <svg-icon icon-class="user"  />
-          <font-awesome-icon icon="user" width="16px" height="16px" ></font-awesome-icon>
-        </span>
-        <el-input
-          ref="username"
-          v-model="loginForm.username"
-          placeholder="Username"
-          name="username"
-          type="text"
-          tabindex="1"
-          autocomplete="on"
-        />
-      </el-form-item>
-
-      <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
-        <el-form-item prop="password">
-          <span class="svg-container">
-            <svg-icon data="@svg/password.svg" />
-          </span>
+  <div class="box">
+    <div class="login-form">
+      <div class="login-form-title">登录</div>
+      <el-form
+        :model="loginForm"
+        status-icon
+        :rules="loginRules"
+        ref="ruleForm"
+        label-width="0"
+        class="demo-ruleForm"
+      >
+        <el-form-item label="" prop="username" style="margin-bottom:32px">
           <el-input
-            :key="passwordType"
-            ref="password"
-            v-model="loginForm.password"
-            :type="passwordType"
-            placeholder="Password"
-            name="password"
-            tabindex="2"
-            autocomplete="on"
-            @keyup.native="checkCapslock"
-            @blur="capsTooltip = false"
-            @keyup.enter.native="handleLogin"
-          />
-          <span class="show-pwd" @click="showPwd">
-            <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-          </span>
+            type="input"
+            v-model="loginForm.username"
+            placeholder="请输入账号"
+            clearable
+            autocomplete="off"
+          >
+            <template slot="prepend">
+              <svg-icon data="@svg/user.svg"></svg-icon>
+            </template>
+          </el-input>
         </el-form-item>
-      </el-tooltip>
-
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
-
-      <div style="position:relative">
-        <div class="tips">
-          <span>Username : admin</span>
-          <span>Password : any</span>
-        </div>
-        <div class="tips">
-          <span style="margin-right:18px;">Username : editor</span>
-          <span>Password : any</span>
-        </div>
-
-        <el-button class="thirdparty-button" type="primary" @click="showDialog=true">
-          Or connect with
-        </el-button>
-      </div>
-    </el-form>
-
-    <el-dialog title="Or connect with" :visible.sync="showDialog">
-      Can not be simulated on local, so please combine you own business simulation! ! !
-      <br>
-      <br>
-      <br>
-      <social-sign />
-    </el-dialog>
+        <el-form-item label="" prop="password">
+          <el-input
+            type="password"
+            v-model="loginForm.password"
+            placeholder="请输入密码"
+            clearable
+            autocomplete="off"
+          >
+            <template slot="prepend">
+              <svg-icon data="@svg/password.svg"></svg-icon>
+            </template>
+          </el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
   </div>
 </template>
 
@@ -80,7 +50,9 @@ import SocialSign from './components/SocialSignin'
 
 export default {
   name: 'Login',
-  components: { SocialSign },
+  components: {
+    SocialSign,
+  },
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
@@ -99,31 +71,43 @@ export default {
     return {
       loginForm: {
         username: 'admin',
-        password: '111111'
+        password: '111111',
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        username: [
+          {
+            required: true,
+            trigger: 'blur',
+            validator: validateUsername,
+          },
+        ],
+        password: [
+          {
+            required: true,
+            trigger: 'blur',
+            validator: validatePassword,
+          },
+        ],
       },
       passwordType: 'password',
       capsTooltip: false,
       loading: false,
       showDialog: false,
       redirect: undefined,
-      otherQuery: {}
+      otherQuery: {},
     }
   },
   watch: {
     $route: {
-      handler: function(route) {
+      handler: function (route) {
         const query = route.query
         if (query) {
           this.redirect = query.redirect
           this.otherQuery = this.getOtherQuery(query)
         }
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   created() {
     // window.addEventListener('storage', this.afterQRScan)
@@ -141,7 +125,7 @@ export default {
   methods: {
     checkCapslock(e) {
       const { key } = e
-      this.capsTooltip = key && key.length === 1 && (key >= 'A' && key <= 'Z')
+      this.capsTooltip = key && key.length === 1 && key >= 'A' && key <= 'Z'
     },
     showPwd() {
       if (this.passwordType === 'password') {
@@ -154,12 +138,16 @@ export default {
       })
     },
     handleLogin() {
-      this.$refs.loginForm.validate(valid => {
+      this.$refs.loginForm.validate((valid) => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('user/login', this.loginForm)
+          this.$store
+            .dispatch('user/login', this.loginForm)
             .then(() => {
-              this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
+              this.$router.push({
+                path: this.redirect || '/',
+                query: this.otherQuery,
+              })
               this.loading = false
             })
             .catch(() => {
@@ -178,7 +166,7 @@ export default {
         }
         return acc
       }, {})
-    }
+    },
     // afterQRScan() {
     //   if (e.key === 'x-admin-oauth-code') {
     //     const code = getQueryObject(e.newValue)
@@ -197,129 +185,119 @@ export default {
     //     }
     //   }
     // }
-  }
+  },
 }
 </script>
 
-<style lang="scss">
-/* 修复input 背景不协调 和光标变色 */
-/* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
-
-$bg:#283443;
-$light_gray:#fff;
-$cursor: #fff;
-
-@supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
-  .login-container .el-input input {
-    color: $cursor;
-  }
-}
-
-/* reset element-ui css */
-.login-container {
-  .el-input {
-    display: inline-block;
-    height: 47px;
-    width: 85%;
-
-    input {
-      background: transparent;
-      border: 0px;
-      -webkit-appearance: none;
-      border-radius: 0px;
-      padding: 12px 5px 12px 15px;
-      color: $light_gray;
-      height: 47px;
-      caret-color: $cursor;
-
-      &:-webkit-autofill {
-        box-shadow: 0 0 0px 1000px $bg inset !important;
-        -webkit-text-fill-color: $cursor !important;
-      }
-    }
-  }
-
-  .el-form-item {
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    color: #454545;
-  }
-}
-</style>
-
 <style lang="scss" scoped>
-$bg:#2d3a4b;
-$dark_gray:#889aa4;
-$light_gray:#eee;
+* {
+  margin: 0;
+  padding: 0;
+}
 
-.login-container {
-  min-height: 100%;
-  width: 100%;
-  background-color: $bg;
+.box {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background: url(https://coolbackgrounds.io/images/unsplash/josh-bean-medium-9501ba9f.jpg)
+    no-repeat fixed;
+  background-size: cover;
+}
+
+.login-form {
+  display: flex;
+  position: relative;
+  width: 480px;
+  height: 320px;
+  flex-direction: column;
+  padding: 32px 64px;
+  text-align: center;
+  z-index: 1;
+  background: inherit;
+  border-radius: 18px;
   overflow: hidden;
 
-  .login-form {
-    position: relative;
-    width: 520px;
-    max-width: 100%;
-    padding: 160px 35px 0;
-    margin: 0 auto;
+  &-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    color: #3d5245;
+  }
+  &::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: calc(100% + 20px);
+    /* + 两边各有一个空格  否则 无效*/
+    height: calc(100% + 20px);
+    background: inherit;
+    box-shadow: 0 0 0 200px rgba(255, 255, 255, 0.2) inset;
+    z-index: -1;
+    filter: blur(6px);
     overflow: hidden;
   }
+}
+.login-form button {
+  margin: 6px 0;
+  height: 36px;
+  background-color: rgba(255, 255, 255, 0.3);
+  border: none;
+  border-radius: 4px;
+  padding: 0 14px;
+  color: #3d5245;
+}
 
-  .tips {
-    font-size: 14px;
-    color: #fff;
-    margin-bottom: 10px;
+.login-form button {
+  position: relative;
+  margin-top: 24px;
+  background-color: rgba(57, 88, 69, 0.4);
+  color: #ffffff;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.4s;
+}
 
-    span {
-      &:first-of-type {
-        margin-right: 16px;
-      }
-    }
-  }
+.login-form button:hover {
+  background-color: rgba(12, 88, 38, 0.67);
+}
 
-  .svg-container {
-    padding: 6px 5px 6px 15px;
-    color: $dark_gray;
-    vertical-align: middle;
-    width: 30px;
-    display: inline-block;
-  }
+.login-form button::before,
+.login-form button::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 100%;
+  background-color: rgba(179, 255, 210, 0.5);
+  opacity: 0.5s;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: skewX(-15deg);
+  filter: blur(30px);
+  overflow: hidden;
+  transform: translateX(-100px);
+}
 
-  .title-container {
-    position: relative;
+.login-form button::after {
+  width: 40px;
+  background-color: rgba(179, 255, 210, 0.3);
+  left: 60px;
+  filter: blur(5px);
+  opacity: 0;
+}
 
-    .title {
-      font-size: 26px;
-      color: $light_gray;
-      margin: 0px auto 40px auto;
-      text-align: center;
-      font-weight: bold;
-    }
-  }
+.login-form button:hover::before {
+  transition: all 1s;
+  transform: translateX(320px);
+  opacity: 0.7;
+}
 
-  .show-pwd {
-    position: absolute;
-    right: 10px;
-    top: 7px;
-    font-size: 16px;
-    color: $dark_gray;
-    cursor: pointer;
-    user-select: none;
-  }
-
-  .thirdparty-button {
-    position: absolute;
-    right: 0;
-    bottom: 6px;
-  }
-
-  @media only screen and (max-width: 470px) {
-    .thirdparty-button {
-      display: none;
-    }
-  }
+.login-form button:hover::after {
+  transition: all 1s;
+  transform: translateX(320px);
+  opacity: 1;
 }
 </style>

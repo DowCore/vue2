@@ -32,7 +32,6 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.use(VueI18n)
 const messages = {
   en: {
-    hello: 'word',
     ...enLocale, // 或者用 Object.assign({ message: 'hello' }, enLocale)
   },
   zh: {
