@@ -6,11 +6,10 @@
         :model="loginForm"
         status-icon
         :rules="loginRules"
-        ref="ruleForm"
+        ref="loginForm"
         label-width="0"
-        class="demo-ruleForm"
       >
-        <el-form-item label="" prop="username" style="margin-bottom:32px">
+        <el-form-item label="" prop="username" style="margin-bottom: 32px">
           <el-input
             type="input"
             v-model="loginForm.username"
@@ -23,7 +22,7 @@
             </template>
           </el-input>
         </el-form-item>
-        <el-form-item label="" prop="password">
+        <el-form-item label="" prop="password" style="margin-bottom: 32px">
           <el-input
             type="password"
             v-model="loginForm.password"
@@ -37,7 +36,9 @@
           </el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
+          <el-button type="primary" class="button-grow" @click="handleLogin"
+            >登录</el-button
+          >
         </el-form-item>
       </el-form>
     </div>
@@ -239,65 +240,20 @@ export default {
     filter: blur(6px);
     overflow: hidden;
   }
-}
-.login-form button {
-  margin: 6px 0;
-  height: 36px;
-  background-color: rgba(255, 255, 255, 0.3);
-  border: none;
-  border-radius: 4px;
-  padding: 0 14px;
-  color: #3d5245;
-}
+  .button-grow {
+    color: #65b5f6;
+    background-color: transparent;
+    border: 1px solid #65b5f6;
+    border-radius: 4px;
+    padding: 0 16px;
+    height: 36px;
+    width: 120px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
 
-.login-form button {
-  position: relative;
-  margin-top: 24px;
-  background-color: rgba(57, 88, 69, 0.4);
-  color: #ffffff;
-  overflow: hidden;
-  cursor: pointer;
-  transition: all 0.4s;
-}
-
-.login-form button:hover {
-  background-color: rgba(12, 88, 38, 0.67);
-}
-
-.login-form button::before,
-.login-form button::after {
-  content: '';
-  display: block;
-  width: 80px;
-  height: 100%;
-  background-color: rgba(179, 255, 210, 0.5);
-  opacity: 0.5s;
-  position: absolute;
-  left: 0;
-  top: 0;
-  transform: skewX(-15deg);
-  filter: blur(30px);
-  overflow: hidden;
-  transform: translateX(-100px);
-}
-
-.login-form button::after {
-  width: 40px;
-  background-color: rgba(179, 255, 210, 0.3);
-  left: 60px;
-  filter: blur(5px);
-  opacity: 0;
-}
-
-.login-form button:hover::before {
-  transition: all 1s;
-  transform: translateX(320px);
-  opacity: 0.7;
-}
-
-.login-form button:hover::after {
-  transition: all 1s;
-  transform: translateX(320px);
-  opacity: 1;
+  .button-grow:hover {
+    transform: scale(1.1);
+  }
 }
 </style>
